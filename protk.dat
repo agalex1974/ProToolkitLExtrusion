@@ -1,7 +1,7 @@
 name Pareametric_Design
 startup dll
-exec_file C:\Users\agalex\Desktop\DPSDParametricModel\x64\Release\DPSDParametricModel.dll
-text_dir C:\Users\agalex\Desktop\DPSDParametricModel\x64\Release
+exec_file C:\Users\agalex\Documents\ProToolkitLExtrusion\x64\Release\DPSDParametricModel.dll
+text_dir C:\Users\agalex\Documents\ProToolkitLExtrusion
 allow_stop true
 delay_start false
 end
