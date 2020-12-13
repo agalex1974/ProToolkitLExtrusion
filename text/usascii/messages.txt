@@ -1,0 +1,8 @@
+-ParametricUI
+Pro/TOOLKIT Parametric Design
+
+
+-ParametricUIHelp
+Invoke the Parametric design UI
+
+
