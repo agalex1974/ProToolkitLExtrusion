@@ -1,3 +1,7 @@
+// Developed by Alexander G. Agathos
+// e-mail: alexander.agathos@gmail.com
+// MIT license, see the license file in the Git repository.
+
 #ifndef AXIS_H
 #define AXIS_H
 
