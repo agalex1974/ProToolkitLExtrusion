@@ -122,7 +122,6 @@ bool ParametricModel::createLExtrusion()
 	
 	ProError status = ProSolidRegenerate(creoModel, 0);
 	PT_TEST_LOG_SUCC("ProSolidRegenerate");
-
 	status = ProWindowRepaint(-1);
 	PT_TEST_LOG_SUCC("ProWindowRepaint");
 

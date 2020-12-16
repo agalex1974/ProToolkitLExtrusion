@@ -1,3 +1,7 @@
+// Developed by Alexander G. Agathos
+// e-mail: alexander.agathos@gmail.com
+// MIT license, see the license file in the Git repository.
+
 #ifndef HOLE_H
 #define HOLE_H
 

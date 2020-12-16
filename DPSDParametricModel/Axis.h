@@ -54,6 +54,7 @@ protected:
 	int createAxis(ProMdl model, const char* name);
 
 public:
+	
 	/**
 	 * Constructor of the axis class
 	 * 

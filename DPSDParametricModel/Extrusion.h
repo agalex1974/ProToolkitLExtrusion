@@ -68,7 +68,9 @@ public:
 	 */
 	~Extrusion();
 protected:
+
 	int extrusionId;										/**< The extrusion id */
+
 	/**
 	 * Function to update the extrusion depth after created.
 	 *
