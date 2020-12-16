@@ -1,3 +1,7 @@
+// Developed by Alexander G. Agathos
+// e-mail: alexander.agathos@gmail.com
+// MIT license, see the license file in the Git repository.
+
 #ifndef EXTRUSION_H
 #define EXTRUSION_H
 
@@ -53,6 +57,7 @@ protected:
 	bool orientationPlaneSet;								/**< True if the orientation plane is created */
 	bool sketchFunctionSet;									/**< True if the sketching function is set */
 public:
+	
 	/**
 	 * The Extrusion constructor
 	 */
