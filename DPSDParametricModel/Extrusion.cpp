@@ -83,7 +83,7 @@ void Extrusion::setDrawingFunction(SketchFunctionDefinition sketchFunction)
 	sketchFunctionSet = true;
 }
 
-bool Extrusion::updateExtrusionSketch(ProMdl model, Parameter* params, int* sketchId, int side_id, int bot_id)
+ProError Extrusion::updateExtrusionSketch(ProMdl model, Parameter* params, int* sketchId, int side_id, int bot_id)
 {
 	static ProElempathItem path_items[] = {
 		{PRO_ELEM_PATH_ITEM_TYPE_ID, PRO_E_STD_SECTION},
@@ -132,11 +132,12 @@ bool Extrusion::updateExtrusionSketch(ProMdl model, Parameter* params, int* sket
 	ProErrorlist errs;
 	opts[0] = PRO_FEAT_CR_INCOMPLETE_FEAT;
 	//opts[0] = PRO_FEAT_CR_NO_OPTS;
-	status = ProFeatureRedefine(NULL, &feature, elementTree, opts, 1, &errs);
+	
+	status = ProFeatureRedefine(NULL, &extrusion_feature, elementTree, opts, 1, &errs);
 	return status;
 }
 
-bool Extrusion::createExtrusion(ProMdl model, Parameter* params, int* sketchId, const char* featureName, int* side_id, int* bot_id)
+ProError Extrusion::createExtrusion(ProMdl model, Parameter* params, int* sketchId, const char* featureName, int* side_id, int* bot_id)
 {
 	ProElement				elem_tree;
 	ProElement				created_elemtree, sketch_element;
@@ -153,7 +154,7 @@ bool Extrusion::createExtrusion(ProMdl model, Parameter* params, int* sketchId, 
 	ProSection				section;
 
 	int brk = 0;
-
+	
 	static ProElempathItem path_items[] = {
 		{PRO_ELEM_PATH_ITEM_TYPE_ID, PRO_E_STD_SECTION},
 		{PRO_ELEM_PATH_ITEM_TYPE_ID, PRO_E_SKETCHER}
@@ -174,6 +175,8 @@ bool Extrusion::createExtrusion(ProMdl model, Parameter* params, int* sketchId, 
 		err = ProMdlToModelitem(model, &model_item);
 		err = ProSelectionAlloc(NULL, &model_item, &model_sel);
 
+		ProFeature feature;
+		
 		opts[0] = PRO_FEAT_CR_INCOMPLETE_FEAT;
 		err = ProFeatureCreate(model_sel, elem_tree, opts, 1, &feature, &errs);
 		if (err != PRO_TK_NO_ERROR)

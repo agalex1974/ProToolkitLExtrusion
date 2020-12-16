@@ -14,8 +14,17 @@ class Extrusion
 public:
 	
 protected:
+
+	// Definition of the initial sketch function
 	using SketchFunctionDefinition = ProError(*)(ProSection section, Parameter *params, int* sketchId, int* side_id, int* bot_id);
+	// Definition of the function to update the sketch
 	using UpdateSketchFunctionDefinition = ProError(*)(ProSection section, Parameter *params, int* sketchId, int side_id, int bot_id);
+
+	// Feature tree of the Extrusion definition.
+	// The class which will inherit this general definition need first to define the sketch plane on which the drawing will happen
+	// and the orientation of the sketch plane, then the tree will be created by partial definition of the extrusion feature
+	// this will create the sketch section on which we will grab and do the sketch painting on it. When finished the feature will be
+	// redefined and it will become fully defined in creo parametric. 
 	ElemTreeData tree[19] = {
 		/* 0 */ {0, PRO_E_FEATURE_TREE, {(ProValueDataType)-1}},
 		/* 1 */ {1, PRO_E_FEATURE_TYPE, {PRO_VALUE_TYPE_INT, PRO_FEAT_PROTRUSION}},
@@ -37,24 +46,86 @@ protected:
 		/* 17 */{3, PRO_E_EXT_DEPTH_TO_TYPE, {PRO_VALUE_TYPE_INT, PRO_EXT_DEPTH_TO_BLIND}},
 		/* 18 */{3, PRO_E_EXT_DEPTH_TO_VALUE, {PRO_VALUE_TYPE_DOUBLE}}
 	};
-	SketchFunctionDefinition sketchFunction;
-	UpdateSketchFunctionDefinition updateSketchFunction;
-	bool referencePlaneSet;
-	bool orientationPlaneSet;
-	bool sketchFunctionSet;
-	ProFeature feature;
+
+	SketchFunctionDefinition sketchFunction;				/**< The sketch function definition */
+	UpdateSketchFunctionDefinition updateSketchFunction;	/**< The update sketch function definition */
+	bool referencePlaneSet;									/**< True if the sketching plane is created */
+	bool orientationPlaneSet;								/**< True if the orientation plane is created */
+	bool sketchFunctionSet;									/**< True if the sketching function is set */
 public:
+	/**
+	 * The Extrusion constructor
+	 */
 	Extrusion();
+	
+	/** 
+	 * The extrusion destructor
+	 */
 	~Extrusion();
 protected:
-	int extrusionId;
+	int extrusionId;										/**< The extrusion id */
+	/**
+	 * Function to update the extrusion depth after created.
+	 *
+	 * @param model Creo's part model session
+	 * @param ExtrusionDepth The new extrusion depth of the feature
+	 */
 	void updateExtrusionDepth(ProMdl model, double ExtrusionDepth);
+
+	/**
+	 * Set the drawing sketch plane
+	 *
+	 * @param model Creo's part model session
+	 * @param surfaceId The id of the sketching plane
+	 */
 	void setTheDrawingPlaneReference(ProMdl model, int surfaceId);
+
+	/**
+	 * Set the drawing sketch plane
+	 *
+	 * @param model Creo's part model session
+	 * @param surfaceId The id of the orientation plane
+	 */
 	void setTheDrawingPlaneOrientation(ProMdl model, int surfaceId);
+
+	/**
+	 * Set the extrusion depth in the initialization phase
+	 *
+	 * @param value the initial depth value
+	 */
 	void setExtrusionDepth(double value);
+
+	/**
+	 * Set the drawing function for initial object sketching
+	 *
+	 * @param sketchFunction The initial sketching function 
+	 */
 	void setDrawingFunction(SketchFunctionDefinition sketchFunction);
-	bool createExtrusion(ProMdl model, Parameter* params, int* sketchId, const char* featureName, int* side_id, int* bot_id);
-	bool updateExtrusionSketch(ProMdl model, Parameter* params, int* sketchId, int side_id, int bot_id);
+
+	/**
+	 * Create the extrusion after setting, 1) The sketching plane, 2) The orientation plane, 3) The sketching function
+	 *
+	 * @param model Creo's part model session
+	 * @param params The parameters of the function
+	 * @param sketchId the sketch Id. This should be replaced by a void pointer in later versions.
+	 * @param featureName the feature name of the extrusion appearing in Creo
+	 * @param side_id The id of one of one of the projections on the plane, this sets also the dimensionality
+	 * @param bot_id The id of one of the projections on the plane, this sets also the dimensionality
+	 * @return if the operation was successful. It needs to be further improved in later versions. 
+	 */
+	ProError createExtrusion(ProMdl model, Parameter* params, int* sketchId, const char* featureName, int* side_id, int* bot_id);
+
+	/**
+	 * Update the extrusion after setting the update function
+	 *
+	 * @param model Creo's part model session
+	 * @param params The parameters of the function
+	 * @param sketchId the sketch Id. This should be replaced by a void pointer in later versions.
+	 * @param side_id The id of one of one of the projections on the plane, this sets also the dimensionality
+	 * @param bot_id The id of one of the projections on the plane, this sets also the dimensionality
+	 * @return if the operation was successful. It needs to be further improved in later versions.
+	 */
+	ProError updateExtrusionSketch(ProMdl model, Parameter* params, int* sketchId, int side_id, int bot_id);
 };
 
 #endif
