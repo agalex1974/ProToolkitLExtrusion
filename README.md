@@ -17,4 +17,5 @@ In this project I saw the figure and used Creo's very analytic examples as refer
 
 Please change: <br />
 errlog_fp = fopen("C:\\Users\\agalex\\Desktop\\Coding\\DPSDParametricModel\\x64\\Release\\ParametricModel.log", "w"); <br />
-to a valid path otherwise Creo will crash. :-)
+to a valid path otherwise Creo will crash. <br />
+Please use a valid path for Creo Toolkit Libraries in the properties of the Solution. <br />
