@@ -22,6 +22,7 @@ extern "C" {
 }
 #endif
 
+bool created = false;
 GuiCInterface* gui;
 FILE* errlog_fp;
 ParametricModel* parametricModel;
@@ -48,7 +49,12 @@ static uiCmdAccessState accessFunction(uiCmdAccessMode access_mode)
 
 	if (status != PRO_TK_NO_ERROR || type != PRO_MDL_PART)
 		return ACCESS_INVISIBLE;
-
+	if (!created) {
+		parametricModel = new ParametricModel();
+		gui = new GuiCInterface(parametricModel);
+		created = true;
+	}
+	
 	return ACCESS_AVAILABLE;
 }
 
@@ -67,10 +73,8 @@ int user_initialize(
 	int wchar_size;
 	ProError status;
 	uiCmdCmdId cmd_id;
-	errlog_fp = fopen("C:\\Users\\agalex\\Desktop\\DPSDParametricModel\\x64\\Release\\GearDesign.log", "w");
+	errlog_fp = fopen("C:\\Users\\agalex\\Desktop\\Coding\\DPSDParametricModel\\x64\\Release\\ParametricModel.log", "w");
 	//errlog_fp = fopen("GearDesign.log", "w");
-	parametricModel = new ParametricModel();
-	gui = new GuiCInterface(parametricModel);
 	
 	if (ProWcharSizeVerify(sizeof(wchar_t), &wchar_size) != PRO_TK_NO_ERROR)
 	{
