@@ -18,3 +18,6 @@ The rights for the L shape definition as a figure belong to:
 https://camo.ici.ro/journal/vol13/v13a7.pdf (figure 4)
 
 In this project I saw the figure and used Creo's very analytic examples as reference to create quite a cute interface.
+change:
+errlog_fp = fopen("C:\\Users\\agalex\\Desktop\\Coding\\DPSDParametricModel\\x64\\Release\\ParametricModel.log", "w");
+to a valid path otherwise Creo will crash. :-)
