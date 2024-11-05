@@ -73,7 +73,8 @@ int user_initialize(
 	int wchar_size;
 	ProError status;
 	uiCmdCmdId cmd_id;
-	errlog_fp = fopen("C:\\Users\\agalex\\Desktop\\Coding\\DPSDParametricModel\\x64\\Release\\ParametricModel.log", "w");
+	//errlog_fp = fopen("C:\\Users\\agalex\\Desktop\\Coding\\DPSDParametricModel\\x64\\Release\\ParametricModel.log", "w");
+	errlog_fp = fopen("ParametricModel.log", "w");
 	//errlog_fp = fopen("GearDesign.log", "w");
 	
 	if (ProWcharSizeVerify(sizeof(wchar_t), &wchar_size) != PRO_TK_NO_ERROR)
